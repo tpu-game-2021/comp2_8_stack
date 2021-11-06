@@ -4,6 +4,13 @@
 int main()
 {
     STACK s;
+    initialize(&s, sizeof(int) * 2);
+
+    int a[2] = { 5, 7 };
+    push_array(&s, a, 2);
+    finalize(&s);
+    /*
+    STACK s;
 
     initialize(&s, sizeof(int) * 100);
 
@@ -22,6 +29,7 @@ int main()
     }
 
     finalize(&s);
+    */
 }
 
 // プログラムの実行: Ctrl + F5 または [デバッグ] > [デバッグなしで開始] メニュー
