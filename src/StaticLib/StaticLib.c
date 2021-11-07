@@ -11,7 +11,7 @@ void initialize(STACK* s, size_t mem_size)
 	if (s == NULL) return;
 
 	s->stack_pointer = NULL;
-	s->stack_memory = NULL;
+	s->stack_memory = (size_t)malloc(mem_size);
 	s->end = NULL;
 }
 
@@ -20,6 +20,7 @@ void initialize(STACK* s, size_t mem_size)
 void finalize(STACK* s)
 {
 	// ToDo: Initializeで確保したメモリを解放しよう
+	free(s->stack_memory);
 }
 
 
@@ -27,7 +28,16 @@ void finalize(STACK* s)
 bool push(STACK* s, int val)
 {
 	// ToDo: valの値をスタックに保存しよう
-	return false;
+	if (s == NULL) return false;
+	if (s->end == NULL)
+	{
+		s->stack_memory = val;
+		s->stack_pointer = val;
+		s->end = val;
+		return true;
+	}
+	s->stack_pointer++;
+
 }
 
 
