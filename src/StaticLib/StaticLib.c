@@ -10,8 +10,11 @@ void initialize(STACK* s, size_t mem_size)
 {
 	if (s == NULL) return;
 
-	s->stack_pointer = (int*)malloc(sizeof(int) * mem_size);
-	s->stack_memory = 0;
+	s->stack_pointer = 0;
+
+	s->stack_memory = (int*)malloc(mem_size);
+    if (s->stack_memory == NULL) exit(0);
+
 	s->end = mem_size;
 }
 
@@ -22,9 +25,8 @@ void finalize(STACK* s)
 	// ToDo: Initializeで確保したメモリを解放しよう
 	if (s == NULL) return;
 
-	free(s->stack_pointer);
+	free(s->stack_memory);
 
-	s->stack_pointer = NULL;
 	s->stack_memory = NULL;
 	s->end = NULL;
 }
@@ -36,15 +38,14 @@ bool push(STACK* s, int val)
 	// ToDo: valの値をスタックに保存しよう
 	if (val == NULL || s == NULL) return false;
 
-	int a = s->stack_memory;
-
-	if (s->stack_memory < s->end)
+	if (s->stack_pointer >= s->end) 
 	{
-		s->stack_memory++;
+		return false;
 	}
 
-	s->stack_pointer[a] = val;
-	
+	s->stack_memory[s->stack_pointer] = val;
+	s->stack_pointer += sizeof(int);
+
 	return true;	
 }
 
@@ -53,19 +54,17 @@ bool push(STACK* s, int val)
 bool push_array(STACK* s, int* addr, int num)
 {
 	// ToDo: addrからはじまるnum個の整数をスタックに保存しよう
-	if (addr == NULL || s == NULL || 
-		num <= 0 || num > s->end) return false;
+	if (s == NULL) return false;
 
-    s->stack_memory = 0;
-
-    for (int i = 0; i < num; i++) 
+	if (s->stack_pointer + (sizeof(int) * num) > s->end) 
 	{
-		if (s->stack_memory > s->end)
-		{
-			s->stack_memory++;
-		}
-			
-		s->stack_pointer[i] = addr[i];
+		return false;
+	}
+
+	for (int i = 0; i < num; i++)
+	{
+		s->stack_memory[s->stack_pointer] = addr[num - 1 - i];
+		s->stack_pointer += sizeof(int);
 	}
 
 	return true;
@@ -78,17 +77,14 @@ int pop(STACK* s)
 	// 不具合時は0を返す
     if (s == NULL) return 0;
 
-	int a, b;
-
-	if (s->stack_memory > 0)
+	if (s->stack_pointer <= 0) 
 	{
-		s->stack_memory--;
+		return 0;
 	}
 
-	a = s->stack_memory;
-	b = s->stack_pointer[a];
+	s->stack_pointer -= sizeof(int);
 
-    return b;
+	return s->stack_memory[s->stack_pointer];
 }
 
 // addrにスタックからnumの要素を取り出す。取り出せた個数を返す
@@ -97,24 +93,22 @@ int pop_array(STACK* s, int* addr, int num)
 	// ToDo: スタックからnum個の値を取り出してaddrから始まるメモリに保存しよう
 	// スタックにnum個の要素がたまっていなかたら、積まれている要素を返して、
 	// 積んだ要素数を返り値として返そう
-	if (s == NULL || addr == NULL || 
-		num <= 0 || num > s->end) return 0;
+	if (s == NULL) return 0;
 
-	int x = 0;
+	int i, count = 0;
 
-	for (int i = 0; i < num; i++) 
+	for (i = 0; i < num; i++)
 	{
-		int a, b;
+		s->stack_pointer -= sizeof(int);
 
-		if (s->stack_memory > 0)
+		if (s->stack_pointer < 0)
 		{
-			s->stack_memory--;
+			break;
 		}
 
-		x++;
-
-		addr[i] = s->stack_pointer[i];
+		addr[i] = s->stack_memory[s->stack_pointer];
+		count++;
 	}
 
-	return x;
+	return count;
 }
