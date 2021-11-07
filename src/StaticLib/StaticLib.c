@@ -96,22 +96,15 @@ int pop_array(STACK* s, int* addr, int num)
 	// スタックにnum個の要素がたまっていなかたら、積まれている要素を返して、
 	// 積んだ要素数を返り値として返そう
 	int i, sp = s->stack_pointer;
-	if (sp > 0)
+	for (i = 0; i < num; i++)
 	{
-		for (i = 0; i < num; i++)
+		if (sp > 0)
 		{
-			if (sp > 0) 
-			{
-				sp--;
-				s->stack_pointer = sp;
-				addr[i] = s->stack_memory[sp];
-			}
-			else return i;
+			sp--;
+			s->stack_pointer = sp;
+			addr[i] = s->stack_memory[sp];
 		}
-		return num;
+		else return i;
 	}
-	else
-	{
-		return 0;
-	}
+	return num;
 }
