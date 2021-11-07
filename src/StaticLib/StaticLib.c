@@ -8,7 +8,6 @@
 // mem_size の容量でスタック用のメモリを確保する
 void initialize(STACK* s, size_t mem_size)
 {
-
 	if (s == NULL) return;
 	s->stack_pointer = (int*)malloc(mem_size);
 	s->stack_memory = NULL;
