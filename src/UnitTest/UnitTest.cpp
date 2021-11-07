@@ -23,6 +23,7 @@ namespace UnitTest
 			finalize(&s);
 		}
 
+
 		TEST_METHOD(大量に（１０００万）積む)
 		{
 			STACK s;

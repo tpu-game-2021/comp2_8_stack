@@ -20,6 +20,7 @@ void finalize(STACK* s);                      // 確保したメモリを解放する
 bool push(STACK* s, int val);                 // valの値をスタックに積む。実行の成否を返す
 bool push_array(STACK* s, int* addr, int num);// addrから始まるnum個の整数をスタックに積む。実行の成否を返す
 
+
 int pop(STACK* s);                            // スタックから一つの要素を取り出す(不具合時は0を返す)
 int pop_array(STACK* s, int* addr, int num);  // addrにスタックからnumの要素を取り出す。取り出せた個数を返す
 
