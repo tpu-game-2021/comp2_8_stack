@@ -10,9 +10,9 @@ void initialize(STACK* s, size_t mem_size)
 {
 	if (s == NULL) return;
 
-	s->stack_pointer = NULL;
-	s->stack_memory = NULL;
-	s->end = NULL;
+	s->stack_pointer = (int*)malloc(mem_size);
+	s->stack_memory = mem_size;
+	s->end = mem_size;
 }
 
 
@@ -20,6 +20,12 @@ void initialize(STACK* s, size_t mem_size)
 void finalize(STACK* s)
 {
 	// ToDo: Initializeで確保したメモリを解放しよう
+	if (s == NULL) return;
+
+	free(s->stack_pointer);
+	s->stack_pointer = NULL;
+	s->stack_memory = NULL;
+	s->end = NULL;
 }
 
 
@@ -27,7 +33,12 @@ void finalize(STACK* s)
 bool push(STACK* s, int val)
 {
 	// ToDo: valの値をスタックに保存しよう
-	return false;
+	if (s == NULL || val == NULL || s->end == 0) return false;
+
+	s->stack_pointer = val;
+	s->end--;
+
+	return true;
 }
 
 
@@ -35,7 +46,14 @@ bool push(STACK* s, int val)
 bool push_array(STACK* s, int* addr, int num)
 {
 	// ToDo: addrからはじまるnum個の整数をスタックに保存しよう
-	return false;
+	if (s == NULL || addr == NULL || num == NULL) return false;
+	
+	for (int i = 0; i < num; i++)
+	{
+		s->stack_pointer = addr[i];
+		s->end--;
+	}
+	return true;
 }
 
 // スタックから一つの要素を取り出す
@@ -43,7 +61,13 @@ int pop(STACK* s)
 {
 	// ToDo: スタックの最上位の値を取り出して返そう
 	// 不具合時は0を返す
-	return 0;
+	if (s == NULL) return 0;
+
+	int i = s->stack_pointer;
+	s->stack_pointer = NULL;
+	s->end++;
+
+	return i;
 }
 
 // addrにスタックからnumの要素を取り出す。取り出せた個数を返す
