@@ -58,7 +58,7 @@ bool push(STACK* s, int val)
 bool push_array(STACK* s, int* addr, int num)
 {
 
-	if (addr == NULL || s == NULL || num <= 0||num>s->end)
+	if (addr == NULL || s == NULL || num <= 0 || num > s->end)
 		return false;
 
 
@@ -102,10 +102,10 @@ int pop(STACK* s)
 // addrにスタックからnumの要素を取り出す。取り出せた個数を返す
 int pop_array(STACK* s, int* addr, int num)
 {
-	if (s == NULL || addr == NULL || num <= 0||num>s->end)
+	if (s == NULL || addr == NULL || num <= 0 || num > s->end)
 		return 0;
 
-	int x=0;
+	int x = 0;
 
 	for (int i = 0; i < num; i++) {
 		int a, b;
@@ -114,7 +114,7 @@ int pop_array(STACK* s, int* addr, int num)
 
 		x++;
 
-		addr[i]= s->stack_pointer[i];
+		addr[i] = s->stack_pointer[i];
 	}
 	// ToDo: スタックからnum個の値を取り出してaddrから始まるメモリに保存しよう
 	// スタックにnum個の要素がたまっていなかたら、積まれている要素を返して、
