@@ -19,6 +19,7 @@ void initialize(STACK* s, size_t mem_size)
 // 確保したメモリを解放する
 void finalize(STACK* s)
 {
+	free(&s);
 	// ToDo: Initializeで確保したメモリを解放しよう
 }
 
@@ -26,14 +27,24 @@ void finalize(STACK* s)
 // valの値をスタックに積む。実行の成否を返す
 bool push(STACK* s, int val)
 {
+	if (s == !NULL)
+	{
+		
+		s = val;
+		return true;
+	}
 	// ToDo: valの値をスタックに保存しよう
-	return false;
+	else
+	{
+		return false;
+	}
 }
 
 
 // addrから始まるnum個の整数をスタックに積む。実行の成否を返す
 bool push_array(STACK* s, int* addr, int num)
 {
+
 	// ToDo: addrからはじまるnum個の整数をスタックに保存しよう
 	return false;
 }
@@ -41,9 +52,16 @@ bool push_array(STACK* s, int* addr, int num)
 // スタックから一つの要素を取り出す
 int pop(STACK* s)
 {
+	if (s == !NULL)
+	{
+		return s;
+	}
 	// ToDo: スタックの最上位の値を取り出して返そう
 	// 不具合時は0を返す
-	return 0;
+	else
+	{
+		return 0;
+	}
 }
 
 // addrにスタックからnumの要素を取り出す。取り出せた個数を返す
