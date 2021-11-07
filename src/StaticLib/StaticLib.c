@@ -31,8 +31,8 @@ bool push(STACK *s, int val)
 {
 	if (s == NULL) return false;
 	// ToDo: valの値をスタックに保存しよう
-	int sp = s->stack_pointer;
-	if (sp < s->end && val != NULL)
+	int sp = s->stack_pointer, end = s->end;
+	if (sp < end)
 	{
 		s->stack_memory[sp] = val;
 		sp++;
