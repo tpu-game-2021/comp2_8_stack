@@ -11,8 +11,9 @@ void initialize(STACK* s, size_t mem_size)
 	if (s == NULL) return;
 
 	s->stack_pointer = NULL;
-	s->stack_memory = NULL;
-	s->end = NULL;
+	s->stack_memory = (int*)malloc(mem_size);
+	s->end = s->stack_memory + mem_size;
+	s->stack_pointer = s->end;
 }
 
 
@@ -20,6 +21,11 @@ void initialize(STACK* s, size_t mem_size)
 void finalize(STACK* s)
 {
 	// ToDo: Initializeで確保したメモリを解放しよう
+	if (s == NULL) return;
+	if (s->stack_pointer == NULL) return;
+	free(s->stack_memory);
+	s->stack_pointer = NULL;
+	s->end = NULL;
 }
 
 
